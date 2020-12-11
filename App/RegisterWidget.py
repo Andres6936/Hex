@@ -7,6 +7,9 @@ class RegisterWidget(QWidget):
         self.passwordConfirmEntry.setPlaceholderText('Confirm Password')
         self.buttonSignUp = QPushButton(self)
         self.buttonSignUp.setText('Sign Up')
+        self.buttonSignUp.setStyleSheet('background-color: #389FD6; border: 2px solid #3592C4; '
+                                        'color: #FFFFFF; padding: 1px 0; margin: 3px 0; border-radius: 3px;'
+                                        'margin-top: 10px;')
         self.usernameEntry = QLineEdit(self)
         self.usernameEntry.setPlaceholderText('Enter Username')
         self.passwordEntry = QLineEdit(self)
