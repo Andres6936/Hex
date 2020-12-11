@@ -12,6 +12,7 @@ class LoginWidget(QWidget):
         self.passwordEntry.setEchoMode(QLineEdit.Password)
         self.buttonLogin = QPushButton(self)
         self.buttonLogin.setText('Login')
+        self.buttonLogin.setStyleSheet('background-color: #389FD6; border: 2px solid #3592C4; color: #FFFFFF;')
         self.buttonLogin.clicked.connect(self.verifyUserCheckTermsAndConditions)
         self.checkTerms = QCheckBox(self)
         self.checkTerms.setText('Terms and Conditions')
