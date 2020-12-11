@@ -13,7 +13,7 @@ class LoginWidget(QWidget):
         self.buttonLogin = QPushButton(self)
         self.buttonLogin.setText('Login')
         self.buttonLogin.setStyleSheet('background-color: #389FD6; border: 2px solid #3592C4; '
-                                       'color: #FFFFFF; padding: 1px 0; margin: 3px 0;')
+                                       'color: #FFFFFF; padding: 1px 0; margin: 3px 0; border-radius: 3px')
         self.buttonLogin.clicked.connect(self.verifyUserCheckTermsAndConditions)
         self.checkTerms = QCheckBox(self)
         self.checkTerms.setText('Terms and Conditions')
