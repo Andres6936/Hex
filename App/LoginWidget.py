@@ -30,19 +30,19 @@ class LoginWidget(QWidget):
     def displayWidgets(self):
         mainLayout = QVBoxLayout(self)
 
-        usernameLayout = QHBoxLayout(self)
+        usernameLayout = QHBoxLayout()
         usernameLayout.addWidget(self.nameEntry)
 
-        toolTipLayout = QVBoxLayout(self)
+        toolTipLayout = QVBoxLayout()
         toolTipLayout.addWidget(QLabel("Please, write your username", self))
 
-        passwordLayout = QHBoxLayout(self)
+        passwordLayout = QHBoxLayout()
         passwordLayout.addWidget(self.passwordEntry)
 
-        checkTermsLayout = QHBoxLayout(self)
+        checkTermsLayout = QHBoxLayout()
         checkTermsLayout.addWidget(self.checkTerms)
 
-        buttonLayout = QHBoxLayout(self)
+        buttonLayout = QHBoxLayout()
         buttonLayout.addWidget(self.buttonLogin)
 
         mainLayout.addLayout(usernameLayout)
@@ -50,6 +50,8 @@ class LoginWidget(QWidget):
         mainLayout.addLayout(passwordLayout)
         mainLayout.addLayout(checkTermsLayout)
         mainLayout.addLayout(buttonLayout)
+
+        self.setLayout(mainLayout)
 
     def verifyUserCheckTermsAndConditions(self):
         if self.checkTerms.isChecked():
