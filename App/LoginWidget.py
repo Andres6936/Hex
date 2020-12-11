@@ -17,6 +17,7 @@ class LoginWidget(QWidget):
         self.buttonLogin.clicked.connect(self.verifyUserCheckTermsAndConditions)
         self.checkTerms = QCheckBox(self)
         self.checkTerms.setText('Terms and Conditions')
+        self.checkTerms.setStyleSheet('margin-bottom: 10px;')
         self.initializeUI()
 
     def initializeUI(self):
