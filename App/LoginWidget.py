@@ -1,5 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QCheckBox, QVBoxLayout, QHBoxLayout
 
+
+# noinspection PyUnresolvedReferences
 class LoginWidget(QWidget):
     def __init__(self):
         super().__init__()
@@ -7,6 +9,7 @@ class LoginWidget(QWidget):
         self.passwordEntry = QLineEdit(self)
         self.buttonLogin = QPushButton(self)
         self.buttonLogin.setText('Login')
+        self.buttonLogin.clicked.connect(self.verifyUserCheckTermsAndConditions)
         self.checkTerms = QCheckBox(self)
         self.checkTerms.setText('Terms and Conditions')
         self.initializeUI()
@@ -44,5 +47,8 @@ class LoginWidget(QWidget):
         mainLayout.addLayout(buttonLayout)
 
     def verifyUserCheckTermsAndConditions(self):
-        pass
+        if self.checkTerms.isChecked():
+            print("Check")
+        else:
+            print("No Check")
 
