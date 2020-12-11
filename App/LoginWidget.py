@@ -49,6 +49,7 @@ class LoginWidget(QWidget):
         mainLayout.addLayout(toolTipLayout)
         mainLayout.addLayout(passwordLayout)
         mainLayout.addLayout(checkTermsLayout)
+        mainLayout.addStretch()
         mainLayout.addLayout(buttonLayout)
 
         self.setLayout(mainLayout)
