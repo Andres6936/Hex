@@ -8,7 +8,7 @@ class SignUpController(QStackedWidget, IController):
     def __init__(self):
         super().__init__()
 
-        self.addWidget(RegisterWidget())
+        self.addWidget(RegisterWidget(self))
         self.addWidget(LoginWidget())
 
         self.show()
@@ -18,4 +18,4 @@ class SignUpController(QStackedWidget, IController):
 
     @overrides(IController)
     def nextScene(self, scene : ESignUp):
-        pass
+        self.showLoginForm()

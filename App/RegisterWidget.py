@@ -1,13 +1,17 @@
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QCheckBox, QVBoxLayout, QHBoxLayout
+from Controller.IController import IController
+from Enum.ESignUp import ESignUp
 
+# noinspection PyUnresolvedReferences
 class RegisterWidget(QWidget):
-    def __init__(self):
+    def __init__(self, parent : IController):
         super().__init__()
         self.passwordConfirmEntry = QLineEdit(self)
         self.passwordConfirmEntry.setPlaceholderText('Confirm Password')
         self.passwordConfirmEntry.setEchoMode(QLineEdit.Password)
         self.buttonSignUp = QPushButton(self)
         self.buttonSignUp.setText('Sign Up')
+        self.buttonSignUp.clicked.connect(lambda: parent.nextScene(ESignUp.LOGIN))
         self.buttonSignUp.setStyleSheet('background-color: #389FD6; border: 2px solid #3592C4; '
                                         'color: #FFFFFF; padding: 1px 0; margin: 3px 0; border-radius: 3px;'
                                         'margin-top: 10px; font: bold;')
