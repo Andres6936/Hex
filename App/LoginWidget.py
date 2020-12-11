@@ -6,7 +6,9 @@ class LoginWidget(QWidget):
     def __init__(self):
         super().__init__()
         self.nameEntry = QLineEdit(self)
+        self.nameEntry.setPlaceholderText('Username')
         self.passwordEntry = QLineEdit(self)
+        self.passwordEntry.setPlaceholderText('Password')
         self.buttonLogin = QPushButton(self)
         self.buttonLogin.setText('Login')
         self.buttonLogin.clicked.connect(self.verifyUserCheckTermsAndConditions)
@@ -24,14 +26,12 @@ class LoginWidget(QWidget):
         mainLayout = QVBoxLayout(self)
 
         usernameLayout = QHBoxLayout(self)
-        usernameLayout.addWidget(QLabel('Username: ', self))
         usernameLayout.addWidget(self.nameEntry)
 
         toolTipLayout = QVBoxLayout(self)
         toolTipLayout.addWidget(QLabel("Please, write your username", self))
 
         passwordLayout = QHBoxLayout(self)
-        passwordLayout.addWidget(QLabel('Password: ', self))
         passwordLayout.addWidget(self.passwordEntry)
 
         checkTermsLayout = QHBoxLayout(self)
