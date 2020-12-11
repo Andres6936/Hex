@@ -9,6 +9,7 @@ class LoginWidget(QWidget):
         self.nameEntry.setPlaceholderText('Username')
         self.passwordEntry = QLineEdit(self)
         self.passwordEntry.setPlaceholderText('Password')
+        self.passwordEntry.setEchoMode(QLineEdit.Password)
         self.buttonLogin = QPushButton(self)
         self.buttonLogin.setText('Login')
         self.buttonLogin.clicked.connect(self.verifyUserCheckTermsAndConditions)
