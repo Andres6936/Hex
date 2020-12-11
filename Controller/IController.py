@@ -1,3 +1,5 @@
+from Enum.ESignUp import ESignUp
+
 def overrides(interface):
     """
     Function override annotation.
@@ -16,5 +18,5 @@ def overrides(interface):
     return overrider
 
 class IController:
-    def nextScene(self):
+    def nextScene(self, scene : ESignUp):
         raise NotImplemented("This class not should be instantiate.")
