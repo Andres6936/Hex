@@ -1,5 +1,8 @@
 def overrides(interface):
     """
+    Function override annotation.
+    Corollary to @abc.abstractmethod where the override is not of an
+    abstractmethod.
     Reference: https://stackoverflow.com/a/8313042
 
     :param interface: Parent class of which the method is overwritten.
