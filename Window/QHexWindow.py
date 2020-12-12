@@ -187,7 +187,8 @@ class QHexWindow(QMainWindow):
         else:
             self.setWindowFilePath(currentFile + " - QHexEdit")
 
-    def strippedName(self, fullFilename: str) -> str:
+    @staticmethod
+    def strippedName(fullFilename: str) -> str:
         return QFileInfo(fullFilename).fileName()
 
     def writeSettings(self):
