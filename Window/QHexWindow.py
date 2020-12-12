@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import QMainWindow, QMenu, QToolBar, QAction, QLabel, QFrame
+from PyQt5.QtWidgets import QMainWindow, QMenu, QToolBar, QAction, QLabel
 from PyQt5.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent, QIcon
-from PyQt5.QtCore import QFile
+from PyQt5.QtCore import QFile, QSize
 from App.QHexEdit import QHexEdit
 
 
@@ -92,11 +92,11 @@ class QHexWindow(QMainWindow):
     def init(self):
         self.setUnifiedTitleAndToolBarOnMac(True)
         self.setCentralWidget(self.hexEdit)
+        self.createActions()
+        self.createMenus()
         self.createStatusBar()
         self.createToolBars()
-        self.createActions()
         self.readSettings()
-        self.createMenus()
 
     def createActions(self):
         self.openAction = QAction(QIcon('Icons/MenuOpen.svg'), '&Open', self)
@@ -153,7 +153,16 @@ class QHexWindow(QMainWindow):
         self.statusBar().addPermanentWidget(labelOverwriteMode)
 
     def createToolBars(self):
-        pass
+        self.fileToolBar = self.addToolBar('File')
+        self.fileToolBar.setIconSize(QSize(16, 16))
+        self.fileToolBar.addAction(self.openAction)
+        self.fileToolBar.addAction(self.saveAction)
+
+        self.editToolBar = self.addToolBar('Edit')
+        self.editToolBar.setIconSize(QSize(16, 16))
+        self.editToolBar.addAction(self.undoAction)
+        self.editToolBar.addAction(self.redoAction)
+        self.editToolBar.addAction(self.findAction)
 
     def loadFile(self):
         pass
