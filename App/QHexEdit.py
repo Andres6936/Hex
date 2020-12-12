@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QAbstractScrollArea
-from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent, QPainter
+from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent, QPainter, QPalette
 from PyQt5.QtCore import QByteArray, QIODevice, QPoint, QRect
 from App.Chunks import Chunks
 from App.UndoStack import UndoStack
@@ -23,6 +23,7 @@ class QHexEdit(QAbstractScrollArea):
         self.editAreaIsAscii = False
         self.hexCaps = False
         self.dynamicBytesPerLine = False
+        self.blink = True
 
         # Name Convention: pixel position start with px
         self.pxCharWidth = 0
@@ -52,6 +53,7 @@ class QHexEdit(QAbstractScrollArea):
         self.cursorRect = QRect()
         self.undoStack = UndoStack()
         self.selectionColor = QColor()
+        self.hexDataShow = QByteArray()
         self.addressAreaColor = QColor()
         self.highlightingColor = QColor()
 
@@ -167,7 +169,20 @@ class QHexEdit(QAbstractScrollArea):
         if event.rect() != self.cursorRect:
             pass
 
+        # _cursorPosition counts in 2, _bPosFirst counts in 1
         hexPositionInShowData = self.cursorPosition - 2 * self.bPosFirst
+
+        if 0 <= hexPositionInShowData < self.hexDataShow.size():
+            if self.readOnly:
+                color = self.viewport().palette().dark().color()
+                painter.fillRect(
+                    QRect(self.pxCursorX - pxOfsx, self.pxCursorY - self.pxCharHeight + self.pxSelectionSub,
+                          self.pxCharWidth, self.pxCharHeight), color)
+            elif self.blink and self.hasFocus():
+                painter.fillRect(self.cursorRect, self.palette().color(QPalette.WindowText))
+
+            if self.editAreaIsAscii:
+                pass
 
     def resizeEvent(self, event: QResizeEvent) -> None:
         pass
