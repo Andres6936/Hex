@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QMenu, QToolBar, QAction, QLabel
+from PyQt5.QtWidgets import QMainWindow, QMenu, QToolBar, QAction, QLabel, QMessageBox
 from PyQt5.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent, QIcon
 from PyQt5.QtCore import QFile, QSize
 from App.QHexEdit import QHexEdit
@@ -164,8 +164,13 @@ class QHexWindow(QMainWindow):
         self.editToolBar.addAction(self.redoAction)
         self.editToolBar.addAction(self.findAction)
 
-    def loadFile(self):
-        pass
+    def loadFile(self, filename: str):
+        self.file.setFileName(filename)
+        if not self.hexEdit.setDataDevice(self.file):
+            QMessageBox.warning(self, "Hex",
+                                f"Cannot read the file {filename}: {self.file.errorString()}.")
+        self.setCurrentFile(filename)
+        self.statusBar().showMessage('File Loaded', 2000)
 
     def readSettings(self):
         pass
