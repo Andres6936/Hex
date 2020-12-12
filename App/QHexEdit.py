@@ -6,8 +6,7 @@ from App.UndoStack import UndoStack
 
 
 class QHexEdit(QAbstractScrollArea):
-    # Define a signal without parameters
-    dataChangedSignal = pyqtSignal(name='dataChanged')
+    dataChanged = pyqtSignal()
 
     def __init__(self):
         super().__init__()
