@@ -1,10 +1,19 @@
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QMenu
 from PyQt5.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent
+from PyQt5.QtCore import QFile
 
 
 class QHexWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+
+        self.currentFile = str()
+        self.isUntitled = False
+
+        self.file = QFile()
+        self.fileMenu = QMenu()
+        self.editMenu = QMenu()
+        self.helpMenu = QMenu()
 
     def closeEvent(self, event: QCloseEvent) -> None:
         pass
