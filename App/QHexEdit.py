@@ -37,6 +37,14 @@ class QHexEdit(QAbstractScrollArea):
         self.pxCursorX = 0
         self.pxCursorY = 0
 
+        # Name Convention: absolute byte position in chunks start with b
+        self.bSelectionBegin = 0
+        self.bSelectionEnd = 0
+        self.bSelectionInit = 0
+        self.bPosFirst = 0
+        self.bPosLast = 0
+        self.bPosCurrent = 0
+
         self.__font = QFont()
         self.chunks = Chunks()
         self.data = QByteArray()
@@ -66,11 +74,23 @@ class QHexEdit(QAbstractScrollArea):
     def setCursorPosition(self, position : int) -> None:
         pass
 
-    def getCursorPositionAt(self, position : QPoint) -> None:
+    def getCursorPositionAt(self, position : QPoint) -> int:
         # Calc cursor position depending on a graphical position
-        result = -1
         posX = position.x() + self.horizontalScrollBar().value()
         posY = position.y() - 3
+        if self.pxPosHexX <= posX < (self.pxPosHexX + (1 + self.hexCharInLine) * self.pxCharWidth):
+            self.editAreaIsAscii = False
+            x = (posX - self.pxPosHexX) / self.pxCharWidth
+            x = (x / 3) * 2 + x % 3
+            y = (posY / self.pxCharHeight) * 2 * self.bytesPerLine
+            return self.bPosFirst * 2 + x + y
+        elif self.asciiArea and self.pxPosAsciiX <= posX < (self.pxPosAsciiX + (1 + self.bytesPerLine) * self.pxCharWidth):
+            self.editAreaIsAscii = True
+            x = 2 * (posX - self.pxPosAsciiX) / self.pxCharWidth
+            y = (posY / self.pxCharHeight) * 2 * self.bytesPerLine
+            return self.bPosFirst * 2 + x + y
+        else:
+            return -1
 
     def setDataArray(self, array : QByteArray) -> None:
         pass
