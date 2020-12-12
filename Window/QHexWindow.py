@@ -34,6 +34,8 @@ class QHexWindow(QMainWindow):
         self.findNextAction = QAction()
         self.saveReadableSelection = QAction()
 
+        self.setAcceptDrops(True)
+        self.init()
         self.show()
 
     def closeEvent(self, event: QCloseEvent) -> None:
@@ -88,9 +90,15 @@ class QHexWindow(QMainWindow):
         pass
 
     def init(self):
-        pass
+        self.setUnifiedTitleAndToolBarOnMac(True)
+        self.setCentralWidget(self.hexEdit)
+        self.createStatusBar()
+        self.createToolBars()
+        self.createActions()
+        self.readSettings()
+        self.createMenus()
 
-    def createACtions(self):
+    def createActions(self):
         pass
 
     def createMenus(self):
