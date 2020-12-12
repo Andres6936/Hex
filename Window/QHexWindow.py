@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QMenu, QToolBar, QAction, QLabel, QMessageBox
 from PyQt5.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent, QIcon
-from PyQt5.QtCore import QFile, QSize
+from PyQt5.QtCore import QFile, QSize, QFileInfo
 from App.QHexEdit import QHexEdit
 
 
@@ -178,8 +178,14 @@ class QHexWindow(QMainWindow):
     def saveFile(self):
         pass
 
-    def setCurrentFile(self):
-        pass
+    def setCurrentFile(self, filename: str):
+        currentFile = QFileInfo(filename).canonicalFilePath()
+        isUntitled = len(currentFile) == 0
+        self.setWindowModified(False)
+        if isUntitled:
+            self.setWindowFilePath("QHexEdit")
+        else:
+            self.setWindowFilePath(currentFile + " - QHexEdit")
 
     def strippedName(self):
         pass
