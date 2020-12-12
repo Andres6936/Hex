@@ -15,6 +15,8 @@ class QHexWindow(QMainWindow):
         self.editMenu = QMenu()
         self.helpMenu = QMenu()
 
+        self.show()
+
     def closeEvent(self, event: QCloseEvent) -> None:
         pass
 
