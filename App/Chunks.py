@@ -1,13 +1,19 @@
+import sys
+
 from PyQt5.QtCore import QByteArray, QObject, QIODevice, QBuffer
+
+CHUNK_SIZE = 100
+
 
 class Chunk:
     def __init__(self):
         self.data = QByteArray()
         self.dataChanged = QByteArray()
-        self.absPos : int = 0
+        self.absPos: int = 0
+
 
 class Chunks(QObject):
-    def __init__(self, parent : QObject = None, device : QIODevice = None):
+    def __init__(self, parent: QObject = None, device: QIODevice = None):
         super().__init__(parent)
         self.device = QBuffer(self) if device is None else device
         self.chunks: [Chunk] = []
@@ -30,13 +36,55 @@ class Chunks(QObject):
         self.position = 0
         return status
 
-    def data(self, position : int, count : int = -1, highlighted : QByteArray = None) -> QByteArray:
+    def data(self, position: int, maxSize: int = -1, highlighted: QByteArray = None) -> QByteArray:
+        delta = 0
+        chunkIdx = 0
+        chunk = Chunk()
+        buffer = QByteArray()
+        if highlighted:
+            highlighted.clear()
+        if position >= self.size:
+            return buffer
+        if maxSize < 0:
+            maxSize = self.size
+        elif (position + maxSize) > self.size:
+            maxSize = self.size - position
+
+        self.device.open(QIODevice.ReadOnly)
+        while maxSize > 0:
+            chunk.absPos = sys.maxsize
+            chunksLoopOngoing = True
+            while chunkIdx < len(self.chunks) and chunksLoopOngoing:
+                # In this section, we track changes before our required data and
+                # we take the editdet data, if availible. ioDelta is a difference
+                # counter to justify the read pointer to the original data, if
+                # data in between was deleted or inserted.
+                chunk = self.chunks[chunkIdx]
+                if chunk.absPos > position:
+                    chunksLoopOngoing = False
+                else:
+                    count = 0
+                    chunkIdx += 1
+                    chunkOfs = position - chunk.absPos
+                    if maxSize > chunk.data.size() - chunkOfs:
+                        count = chunk.data.size() - chunkOfs
+                        delta += CHUNK_SIZE - chunk.data.size()
+                    else:
+                        count = maxSize
+
+                    if count > 0:
+                        buffer += chunk.data.mid(chunkOfs, count)
+                        maxSize -= count
+                        position += count
+                        if highlighted:
+                            highlighted += chunk.dataChanged.mid(chunkOfs, count)
+            if maxSize > 0 and position < chunk.absPos:
+                pass
+
+    def write(self, device: QIODevice, position: int = 0, count: int = -1) -> bool:
         pass
 
-    def write(self, device : QIODevice, position : int = 0, count : int = -1) -> bool:
-        pass
-
-    def setDataChanged(self, position : int, dataChanged : bool) -> None:
+    def setDataChanged(self, position: int, dataChanged: bool) -> None:
         pass
 
     def dataChanged(self, position: int) -> bool:
