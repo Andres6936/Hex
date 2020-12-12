@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QAbstractScrollArea
-from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent
-from PyQt5.QtCore import QByteArray, QIODevice, QPoint
+from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent, QPainter
+from PyQt5.QtCore import QByteArray, QIODevice, QPoint, QRect
 from App.Chunks import Chunks
 from App.UndoStack import UndoStack
 
@@ -49,6 +49,7 @@ class QHexEdit(QAbstractScrollArea):
         self.__font = QFont()
         self.chunks = Chunks()
         self.data = QByteArray()
+        self.cursorRect = QRect()
         self.undoStack = UndoStack()
         self.selectionColor = QColor()
         self.addressAreaColor = QColor()
@@ -161,7 +162,12 @@ class QHexEdit(QAbstractScrollArea):
         pass
 
     def paintEvent(self, event: QPaintEvent) -> None:
-        pass
+        painter = QPainter(self.viewport())
+        pxOfsx = self.horizontalScrollBar().value()
+        if event.rect() != self.cursorRect:
+            pass
+
+        hexPositionInShowData = self.cursorPosition - 2 * self.bPosFirst
 
     def resizeEvent(self, event: QResizeEvent) -> None:
         pass
