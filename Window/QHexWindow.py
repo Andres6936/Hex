@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QMenu, QToolBar, QAction, QLabel, QMessageBox
 from PyQt5.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent, QIcon
 from PyQt5.QtCore import QFile, QSize, QFileInfo, QSettings
+from Dialog.OptionsDialog import OptionsDialog
 from App.QHexEdit import QHexEdit
 
 
@@ -33,6 +34,7 @@ class QHexWindow(QMainWindow):
         self.optionsAction = QAction()
         self.findNextAction = QAction()
         self.saveReadableSelection = QAction()
+        self.optionsDialog = OptionsDialog(self)
 
         self.setAcceptDrops(True)
         self.init()
@@ -89,7 +91,10 @@ class QHexWindow(QMainWindow):
     def showSearchDialog(self):
         pass
 
+    # noinspection PyUnresolvedReferences
     def init(self):
+        self.optionsDialog.accepted.connect(self.optionsAccepted)
+
         self.setUnifiedTitleAndToolBarOnMac(True)
         self.setCentralWidget(self.hexEdit)
         self.createActions()
