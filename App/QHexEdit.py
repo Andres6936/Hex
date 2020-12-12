@@ -31,10 +31,19 @@ class QHexEdit(QAbstractScrollArea):
         self.addressAreaColor = QColor()
         self.highlightingColor = QColor()
 
-    def insert(self, position : int, array : QByteArray):
+    def insertChar(self, index : int, character : str) -> None:
         pass
 
-    def replace(self, position : int, length : int, array : QByteArray):
+    def removeChar(self, index : int, length : int) -> None:
+        pass
+
+    def replaceChar(self, index : int, char : str) -> None:
+        pass
+
+    def insertAtArray(self, position : int, array : QByteArray) -> None:
+        pass
+
+    def replaceAtArray(self, position : int, length : int, array : QByteArray) -> None:
         pass
 
     def ensureVisible(self) -> None:
