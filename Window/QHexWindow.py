@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QMainWindow, QMenu, QToolBar, QAction
-from PyQt5.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent
+from PyQt5.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent, QIcon
 from PyQt5.QtCore import QFile
 from App.QHexEdit import QHexEdit
 
@@ -99,10 +99,42 @@ class QHexWindow(QMainWindow):
         self.createMenus()
 
     def createActions(self):
-        pass
+        self.openAction = QAction(QIcon('Icons/MenuOpen.svg'), '&Open', self)
+        self.saveAction = QAction(QIcon('Icons/MenuSaveAll'), '&Save', self)
+        self.saveAsAction = QAction('Save &As...', self)
+        self.saveReadable = QAction('Save &Readable', self)
+        self.exitAction = QAction('E&xit', self)
+        self.undoAction = QAction(QIcon('Icons/Undo.svg'), '&Undo', self)
+        self.redoAction = QAction(QIcon('Icons/Redo.svg'), '&Redo', self)
+        self.saveReadableSelection = QAction('Save Selection Readable', self)
+        self.aboutAction = QAction('&About', self)
+        self.aboutQtAction = QAction('About &Qt', self)
+        self.findAction = QAction(QIcon('Icons/Find.svg'), '&Find/Replace', self)
+        self.findNextAction = QAction('Find &Next', self)
+        self.optionsAction = QAction('&Options', self)
 
     def createMenus(self):
-        pass
+        self.fileMenu = self.menuBar().addMenu('&File')
+        self.fileMenu.addAction(self.openAction)
+        self.fileMenu.addAction(self.saveAction)
+        self.fileMenu.addAction(self.saveAsAction)
+        self.fileMenu.addAction(self.saveReadable)
+        self.fileMenu.addSeparator()
+        self.fileMenu.addAction(self.exitAction)
+
+        self.editMenu = self.menuBar().addMenu('&Edit')
+        self.editMenu.addAction(self.undoAction)
+        self.editMenu.addAction(self.redoAction)
+        self.editMenu.addAction(self.saveReadableSelection)
+        self.editMenu.addSeparator()
+        self.editMenu.addAction(self.findAction)
+        self.editMenu.addAction(self.findNextAction)
+        self.editMenu.addSeparator()
+        self.editMenu.addAction(self.optionsAction)
+
+        self.helpMenu = self.menuBar().addMenu('&Help')
+        self.helpMenu.addAction(self.aboutAction)
+        self.helpMenu.addAction(self.aboutQtAction)
 
     def createStatusBar(self):
         pass
