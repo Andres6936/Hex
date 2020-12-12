@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QMenu
+from PyQt5.QtWidgets import QMainWindow, QMenu, QToolBar, QAction
 from PyQt5.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent
 from PyQt5.QtCore import QFile
 
@@ -14,6 +14,22 @@ class QHexWindow(QMainWindow):
         self.fileMenu = QMenu()
         self.editMenu = QMenu()
         self.helpMenu = QMenu()
+        self.fileToolBar = QToolBar()
+        self.editToolBar = QToolBar()
+        self.undoAction = QAction()
+        self.redoAction = QAction()
+        self.openAction = QAction()
+        self.saveAction = QAction()
+        self.exitAction = QAction()
+        self.findAction = QAction()
+        self.aboutAction = QAction()
+        self.closeAction = QAction()
+        self.saveAsAction = QAction()
+        self.saveReadable = QAction()
+        self.aboutQtAction = QAction()
+        self.optionsAction = QAction()
+        self.findNextAction = QAction()
+        self.saveReadableSelection = QAction()
 
         self.show()
 
