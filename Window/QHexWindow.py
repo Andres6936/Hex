@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QMenu, QToolBar, QAction
 from PyQt5.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent
 from PyQt5.QtCore import QFile
+from App.QHexEdit import QHexEdit
 
 
 class QHexWindow(QMainWindow):
@@ -9,6 +10,8 @@ class QHexWindow(QMainWindow):
 
         self.currentFile = str()
         self.isUntitled = False
+
+        self.hexEdit = QHexEdit()
 
         self.file = QFile()
         self.fileMenu = QMenu()
