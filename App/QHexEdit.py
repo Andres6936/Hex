@@ -52,6 +52,7 @@ class QHexEdit(QAbstractScrollArea):
         self.data = QByteArray()
         self.cursorRect = QRect()
         self.undoStack = UndoStack()
+        self.dataShown = QByteArray()
         self.selectionColor = QColor()
         self.hexDataShow = QByteArray()
         self.addressAreaColor = QColor()
@@ -182,7 +183,20 @@ class QHexEdit(QAbstractScrollArea):
                 painter.fillRect(self.cursorRect, self.palette().color(QPalette.WindowText))
 
             if self.editAreaIsAscii:
-                pass
+                asciiPositionInShowData = hexPositionInShowData // 2
+                ch = self.dataShown.at(asciiPositionInShowData)
+                if ch < ' ' or ch > '~':
+                    ch = '.'
+                painter.drawText(self.pxCursorX - pxOfsx, self.pxCursorY, ch)
+            else:
+                painter.drawText(self.pxCursorX - pxOfsx, self.pxCursorY,
+                                 self.hexDataShow.mid(hexPositionInShowData,
+                                                      1).toUpper() if self.hexCaps else self.hexDataShow.mid(
+                                     hexPositionInShowData, 1))
+        # emit event, if size has changed
+        if self.lastEventSize != self.chunks.size:
+            self.lastEventSize = self.chunks.size
+            self.currentSizeChanged(self.lastEventSize)
 
     def resizeEvent(self, event: QResizeEvent) -> None:
         pass
