@@ -94,7 +94,7 @@ class QHexWindow(QMainWindow):
     # noinspection PyUnresolvedReferences
     def init(self):
         self.optionsDialog.accepted.connect(self.optionsAccepted)
-        self.hexEdit.dataChangedPrivate.connect(self.dataChanged)
+        self.hexEdit.dataChanged.connect(self.dataChanged)
 
         self.setUnifiedTitleAndToolBarOnMac(True)
         self.setCentralWidget(self.hexEdit)

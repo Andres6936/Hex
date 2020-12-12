@@ -1,11 +1,14 @@
 from PyQt5.QtWidgets import QAbstractScrollArea
 from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent, QPainter, QPalette
-from PyQt5.QtCore import QByteArray, QIODevice, QPoint, QRect
+from PyQt5.QtCore import QByteArray, QIODevice, QPoint, QRect, pyqtSignal
 from App.Chunks import Chunks
 from App.UndoStack import UndoStack
 
 
 class QHexEdit(QAbstractScrollArea):
+    # Define a signal without parameters
+    dataChangedSignal = pyqtSignal(name='dataChanged')
+
     def __init__(self):
         super().__init__()
 
