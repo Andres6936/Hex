@@ -26,11 +26,29 @@ class Chunks(QObject):
     def setDataChanged(self, position : int, dataChanged : bool) -> None:
         pass
 
-    def dataChanged(self, position : int) -> bool:
+    def dataChanged(self, position: int) -> bool:
         pass
 
-    def indexOf(self, array : QByteArray, _from : int) -> int:
+    def indexOf(self, array: QByteArray, _from: int) -> int:
         pass
 
-    def lastIndexOf(self, array : QByteArray, _from : int) -> int:
+    def lastIndexOf(self, array: QByteArray, _from: int) -> int:
+        pass
+
+    def insert(self, position: int, character: str) -> bool:
+        pass
+
+    def overwrite(self, position: int, character: str) -> bool:
+        pass
+
+    def removeAt(self, position: int) -> bool:
+        pass
+
+    def getPosition(self) -> int:
+        pass
+
+    def getSize(self) -> int:
+        pass
+
+    def __getitem__(self, item):
         pass
