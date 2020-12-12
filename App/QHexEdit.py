@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QAbstractScrollArea
 from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent
-from PyQt5.QtCore import QByteArray
+from PyQt5.QtCore import QByteArray, QIODevice
 from App.Chunks import Chunks
 from App.UndoStack import UndoStack
 
@@ -30,6 +30,15 @@ class QHexEdit(QAbstractScrollArea):
         self.selectionColor = QColor()
         self.addressAreaColor = QColor()
         self.highlightingColor = QColor()
+
+    def setData(self, device : QIODevice) -> bool:
+        pass
+
+    def dataAt(self, position : int, count : int) -> QByteArray:
+        pass
+
+    def write(self, device : QIODevice, position : int, count : int) -> bool:
+        pass
 
     def insertChar(self, index : int, character : str) -> None:
         pass
