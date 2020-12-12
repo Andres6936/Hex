@@ -7,6 +7,7 @@ from App.UndoStack import UndoStack
 
 class QHexEdit(QAbstractScrollArea):
     dataChanged = pyqtSignal()
+    overwriteModeChanged = pyqtSignal(bool)
 
     def __init__(self):
         super().__init__()

@@ -95,6 +95,7 @@ class QHexWindow(QMainWindow):
     def init(self):
         self.optionsDialog.accepted.connect(self.optionsAccepted)
         self.hexEdit.dataChanged.connect(self.dataChanged)
+        self.hexEdit.overwriteModeChanged.connect(self.setOverwriteMode)
 
         self.setUnifiedTitleAndToolBarOnMac(True)
         self.setCentralWidget(self.hexEdit)
