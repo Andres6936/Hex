@@ -37,6 +37,21 @@ class QHexEdit(QAbstractScrollArea):
     def setAddressAreaColor(self, color : QColor) -> None:
         pass
 
+    def setAddressOffset(self, addressOffset : int) -> None:
+        pass
+
+    def setAddressWidth(self, width : int) -> None:
+        pass
+
+    def setAsciiArea(self, asciiArea : bool) -> None:
+        pass
+
+    def setBytesPerLine(self, count : int) -> None:
+        pass
+
+    def setCursorPosition(self, position : int) -> None:
+        pass
+
     def setData(self, device : QIODevice) -> bool:
         pass
 
