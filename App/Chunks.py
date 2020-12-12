@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QByteArray, QObject, QIODevice
+from PyQt5.QtCore import QByteArray, QObject, QIODevice, QBuffer
 
 class Chunk:
     def __init__(self):
@@ -14,8 +14,18 @@ class Chunks(QObject):
         self.position = 0
         self.size = 0
 
-    def setIODevice(self, device : QIODevice) -> bool:
-        pass
+    def setIODevice(self, device: QIODevice) -> bool:
+        self.device = device
+        status = self.device.open(QIODevice.ReadOnly)
+        if status:
+            self.size = self.device.size()
+            self.device.close()
+        else:
+            self.size = 0
+            self.device = QBuffer(self)
+        self.chunks.clear()
+        self.position = 0
+        return status
 
     def data(self, position : int, count : int = -1, highlighted : QByteArray = None) -> QByteArray:
         pass
