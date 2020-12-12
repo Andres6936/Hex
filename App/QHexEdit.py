@@ -52,6 +52,12 @@ class QHexEdit(QAbstractScrollArea):
     def setCursorPosition(self, position : int) -> None:
         pass
 
+    def getCursorPositionAt(self, position : int) -> None:
+        pass
+
+    def setDataArray(self, array : QByteArray) -> None:
+        pass
+
     def setData(self, device : QIODevice) -> bool:
         pass
 
