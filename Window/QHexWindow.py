@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QMenu, QToolBar, QAction
+from PyQt5.QtWidgets import QMainWindow, QMenu, QToolBar, QAction, QLabel, QFrame
 from PyQt5.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent, QIcon
 from PyQt5.QtCore import QFile
 from App.QHexEdit import QHexEdit
@@ -137,7 +137,20 @@ class QHexWindow(QMainWindow):
         self.helpMenu.addAction(self.aboutQtAction)
 
     def createStatusBar(self):
-        pass
+        self.statusBar().addPermanentWidget(QLabel('Address:'))
+        labelAddress = QLabel()
+        labelAddress.setMinimumWidth(70)
+        self.statusBar().addPermanentWidget(labelAddress)
+
+        self.statusBar().addPermanentWidget(QLabel('Size:'))
+        labelSize = QLabel()
+        labelSize.setMinimumWidth(70)
+        self.statusBar().addPermanentWidget(labelSize)
+
+        self.statusBar().addPermanentWidget(QLabel('Mode:'))
+        labelOverwriteMode = QLabel()
+        labelOverwriteMode.setMinimumWidth(70)
+        self.statusBar().addPermanentWidget(labelOverwriteMode)
 
     def createToolBars(self):
         pass
