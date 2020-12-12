@@ -58,7 +58,7 @@ class QHexEdit(QAbstractScrollArea):
     def setDataArray(self, array : QByteArray) -> None:
         pass
 
-    def setData(self, device : QIODevice) -> bool:
+    def setDataDevice(self, device : QIODevice) -> bool:
         pass
 
     def dataAt(self, position : int, count : int) -> QByteArray:
