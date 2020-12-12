@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QAbstractScrollArea
 from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent
-from PyQt5.QtCore import QByteArray, QIODevice
+from PyQt5.QtCore import QByteArray, QIODevice, QPoint
 from App.Chunks import Chunks
 from App.UndoStack import UndoStack
 
@@ -22,6 +22,20 @@ class QHexEdit(QAbstractScrollArea):
         self.editAreaIsAscii = False
         self.hexCaps = False
         self.dynamicBytesPerLine = False
+
+        # Name Convention: pixel position start with px
+        self.pxCharWidth = 0
+        self.pxCharHeight = 0
+        self.pxPosHexX = 0
+        self.pxPosAdrX = 0
+        self.pxPosAsciiX = 0
+        self.pxGapAdr = 0
+        self.pxGapAdrHex = 0
+        self.pxGapHexAscii = 0
+        self.pxCursorWidth = 0
+        self.pxSelectionSub = 0
+        self.pxCursorX = 0
+        self.pxCursorY = 0
 
         self.__font = QFont()
         self.chunks = Chunks()
@@ -52,8 +66,11 @@ class QHexEdit(QAbstractScrollArea):
     def setCursorPosition(self, position : int) -> None:
         pass
 
-    def getCursorPositionAt(self, position : int) -> None:
-        pass
+    def getCursorPositionAt(self, position : QPoint) -> None:
+        # Calc cursor position depending on a graphical position
+        result = -1
+        posX = position.x() + self.horizontalScrollBar().value()
+        posY = position.y() - 3
 
     def setDataArray(self, array : QByteArray) -> None:
         pass
