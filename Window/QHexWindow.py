@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QMenu, QToolBar, QAction, QLabel, QMessageBox
 from PyQt5.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent, QIcon
-from PyQt5.QtCore import QFile, QSize, QFileInfo
+from PyQt5.QtCore import QFile, QSize, QFileInfo, QSettings
 from App.QHexEdit import QHexEdit
 
 
@@ -192,4 +192,6 @@ class QHexWindow(QMainWindow):
         return QFileInfo(fullFilename).fileName()
 
     def writeSettings(self):
-        pass
+        settings = QSettings()
+        settings.setValue("pos", self.pos())
+        settings.setValue("size", self.size())
