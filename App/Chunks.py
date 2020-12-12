@@ -9,10 +9,12 @@ class Chunk:
 class Chunks(QObject):
     def __init__(self, parent : QObject = None, device : QIODevice = None):
         super().__init__(parent)
-        self.device = QIODevice() if device is None else device
-        self.chunks : [Chunk] = []
+        self.device = QBuffer(self) if device is None else device
+        self.chunks: [Chunk] = []
         self.position = 0
         self.size = 0
+
+        self.setIODevice(self.device)
 
     def setIODevice(self, device: QIODevice) -> bool:
         self.device = device
@@ -21,6 +23,7 @@ class Chunks(QObject):
             self.size = self.device.size()
             self.device.close()
         else:
+            # Fallback is an empty buffer
             self.size = 0
             self.device = QBuffer(self)
         self.chunks.clear()
