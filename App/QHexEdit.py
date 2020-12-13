@@ -195,7 +195,7 @@ class QHexEdit(QAbstractScrollArea):
             if self.addressArea:
                 pxPosY = self.pxCharHeight
                 for row in range(self.dataShown.size() // self.bytesPerLine):
-                    address = str(self.addressDigit)
+                    address = "{0:0<16}".format(self.addressDigit)
                     painter.drawText(self.pxPosAdrX - pxOfsx, pxPosY, address.upper() if self.hexCaps else address)
                     pxPosY += self.pxCharHeight
 
