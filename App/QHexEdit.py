@@ -138,7 +138,7 @@ class QHexEdit(QAbstractScrollArea):
         pass
 
     def isModified(self) -> bool:
-        pass
+        return self.modified
 
     def lastIndexOf(self, array: QByteArray, _from: int) -> int:
         pass
