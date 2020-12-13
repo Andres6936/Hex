@@ -38,6 +38,7 @@ class QHexWindow(QMainWindow):
 
         self.setAcceptDrops(True)
         self.init()
+        self.setFixedSize(QSize(1200, 600))
         self.show()
 
     def closeEvent(self, event: QCloseEvent) -> None:
