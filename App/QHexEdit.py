@@ -357,7 +357,8 @@ class QHexEdit(QAbstractScrollArea):
         self.dataChanged.emit()
 
     def refresh(self) -> None:
-        pass
+        self.ensureVisible()
+        self.readBuffers()
 
     def readBuffers(self) -> None:
         self.dataShown = self.chunks.data(self.bPosFirst, self.bPosLast - self.bPosFirst + self.bytesPerLine + 1,
