@@ -178,7 +178,13 @@ class QHexEdit(QAbstractScrollArea):
         painter = QPainter(self.viewport())
         pxOfsx = self.horizontalScrollBar().value()
         if event.rect() != self.cursorRect:
-            pass
+            pxPosStartY = self.pxCharHeight
+            # Draw some patterns if needed
+            painter.fillRect(event.rect(), self.viewport().palette().color(QPalette.Base))
+            if self.addressArea:
+                painter.fillRect(
+                    QRect(-pxOfsx, event.rect().top(), self.pxPosHexX - self.pxGapAdrHex // 2, self.height()),
+                    self.addressAreaColor)
 
         # _cursorPosition counts in 2, _bPosFirst counts in 1
         hexPositionInShowData = self.cursorPosition - 2 * self.bPosFirst
