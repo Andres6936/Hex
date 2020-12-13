@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QAbstractScrollArea
-from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent, QPainter, QPalette
+from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent, QPainter, QPalette, QPen
 from PyQt5.QtCore import QByteArray, QIODevice, QPoint, QRect, pyqtSignal, Qt, QTimer
 from App.Chunks import Chunks
 from App.UndoStack import UndoStack
@@ -226,6 +226,17 @@ class QHexEdit(QAbstractScrollArea):
                     address = "{0:0<16}".format(self.addressDigit)
                     painter.drawText(self.pxPosAdrX - pxOffsetX, pxPosY, address.upper() if self.hexCaps else address)
                     pxPosY += self.pxCharHeight
+            colStandard = QPen(self.viewport().palette().color(QPalette.WindowText))
+            painter.setBackgroundMode(Qt.TransparentMode)
+            pxPosY = pxPosStartY
+            for row in range(self.rowsShown):
+                pxPosX = self.pxPosHexX - pxOffsetX
+                pxPosAsciiX = self.pxPosAsciiX - pxOffsetX
+                bPosLine = row * self.bytesPerLine
+                pxPosY += self.pxCharHeight
+                colIdx = 0
+                while (bPosLine + colIdx) < self.dataShown.size() and colIdx < self.bytesPerLine:
+                    colIdx += 1
 
         # _cursorPosition counts in 2, _bPosFirst counts in 1
         hexPositionInShowData = self.cursorPosition - 2 * self.bPosFirst
