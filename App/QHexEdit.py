@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QAbstractScrollArea
 from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent, QPainter, QPalette, \
     QFontMetrics
-from PyQt5.QtCore import QByteArray, QIODevice, QPoint, QRect, pyqtSignal, Qt
+from PyQt5.QtCore import QByteArray, QIODevice, QPoint, QRect, pyqtSignal, Qt, QTimer
 from App.Chunks import Chunks
 from App.UndoStack import UndoStack
 
@@ -59,12 +59,16 @@ class QHexEdit(QAbstractScrollArea):
         self.__font = QFont()
         self.data = QByteArray()
         self.cursorRect = QRect()
+        self.cursorTimer = QTimer()
         self.undoStack = UndoStack()
         self.dataShown = QByteArray()
         self.selectionColor = QColor()
         self.hexDataShow = QByteArray()
         self.addressAreaColor = QColor()
         self.highlightingColor = QColor()
+
+        self.cursorTimer.setInterval(500)
+        self.cursorTimer.start()
 
         self.setFont(QFont("Monospace", 12))
 
@@ -193,26 +197,26 @@ class QHexEdit(QAbstractScrollArea):
 
     def paintEvent(self, event: QPaintEvent) -> None:
         painter = QPainter(self.viewport())
-        pxOfsx = self.horizontalScrollBar().value()
+        pxOffsetX = self.horizontalScrollBar().value()
         if event.rect() != self.cursorRect:
             pxPosStartY = self.pxCharHeight
             # Draw some patterns if needed
             painter.fillRect(event.rect(), self.viewport().palette().color(QPalette.Base))
             if self.addressArea:
                 painter.fillRect(
-                    QRect(-pxOfsx, event.rect().top(), self.pxPosHexX - self.pxGapAdrHex // 2, self.height()),
+                    QRect(-pxOffsetX, event.rect().top(), self.pxPosHexX - self.pxGapAdrHex // 2, self.height()),
                     self.addressAreaColor)
 
             if self.asciiArea:
                 linePos = self.pxPosAsciiX - (self.pxGapHexAscii // 2)
                 painter.setPen(Qt.gray)
-                painter.drawLine(linePos - pxOfsx, event.rect().top(), linePos - pxOfsx, self.height())
+                painter.drawLine(linePos - pxOffsetX, event.rect().top(), linePos - pxOffsetX, self.height())
             painter.setPen(self.viewport().palette().color(QPalette.WindowText))
             if self.addressArea:
                 pxPosY = self.pxCharHeight
                 for row in range(self.dataShown.size() // self.bytesPerLine):
                     address = "{0:0<16}".format(self.addressDigit)
-                    painter.drawText(self.pxPosAdrX - pxOfsx, pxPosY, address.upper() if self.hexCaps else address)
+                    painter.drawText(self.pxPosAdrX - pxOffsetX, pxPosY, address.upper() if self.hexCaps else address)
                     pxPosY += self.pxCharHeight
 
         # _cursorPosition counts in 2, _bPosFirst counts in 1
@@ -222,7 +226,7 @@ class QHexEdit(QAbstractScrollArea):
             if self.readOnly:
                 color = self.viewport().palette().dark().color()
                 painter.fillRect(
-                    QRect(self.pxCursorX - pxOfsx, self.pxCursorY - self.pxCharHeight + self.pxSelectionSub,
+                    QRect(self.pxCursorX - pxOffsetX, self.pxCursorY - self.pxCharHeight + self.pxSelectionSub,
                           self.pxCharWidth, self.pxCharHeight), color)
             elif self.blink and self.hasFocus():
                 painter.fillRect(self.cursorRect, self.palette().color(QPalette.WindowText))
@@ -232,9 +236,9 @@ class QHexEdit(QAbstractScrollArea):
                 ch = self.dataShown.at(asciiPositionInShowData)
                 if ch < ' ' or ch > '~':
                     ch = '.'
-                painter.drawText(self.pxCursorX - pxOfsx, self.pxCursorY, ch)
+                painter.drawText(self.pxCursorX - pxOffsetX, self.pxCursorY, ch)
             else:
-                painter.drawText(self.pxCursorX - pxOfsx, self.pxCursorY,
+                painter.drawText(self.pxCursorX - pxOffsetX, self.pxCursorY,
                                  self.hexDataShow.mid(hexPositionInShowData,
                                                       1).toUpper() if self.hexCaps else self.hexDataShow.mid(
                                      hexPositionInShowData, 1))
@@ -254,7 +258,7 @@ class QHexEdit(QAbstractScrollArea):
             # +1 because the last hex value do not have space. so it is effective one char more
             charWidth = (self.viewport().width() - pxFixGaps) // self.pxCharWidth + 1
             # 2 hex alfa-digits 1 space 1 ascii per byte = 4; if ascii is disabled then 3
-            # to prevent devision by zero use the min value 1
+            # to prevent division by zero use the min value 1
             self.setBytesPerLine(max(charWidth // (4 if self.asciiArea else 3), 1))
         self.adjust()
 
