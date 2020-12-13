@@ -54,8 +54,9 @@ class QHexEdit(QAbstractScrollArea):
         self.bPosLast = 0
         self.bPosCurrent = 0
 
+        self.chunks = Chunks(self)
+
         self.__font = QFont()
-        self.chunks = Chunks()
         self.data = QByteArray()
         self.cursorRect = QRect()
         self.undoStack = UndoStack()
