@@ -66,12 +66,13 @@ class QHexEdit(QAbstractScrollArea):
         self.undoStack = UndoStack()
         self.dataShown = QByteArray()
         self.brushSelection = QBrush()
-        self.selectionColor = QColor()
         self.hexDataShow = QByteArray()
         self.markedShown = QByteArray()
         self.brushHighlighted = QBrush()
-        self.addressAreaColor = QColor()
-        self.highlightingColor = QColor()
+
+        self.highlightingColor = QColor(0xff, 0xff, 0x99, 0xff)
+        self.selectionColor = self.palette().highlight().color()
+        self.addressAreaColor = self.palette().alternateBase().color()
 
         self.cursorTimer.timeout.connect(self.updateCursor)
         self.cursorTimer.setInterval(500)
