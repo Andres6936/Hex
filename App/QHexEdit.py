@@ -228,7 +228,19 @@ class QHexEdit(QAbstractScrollArea):
             self.currentSizeChanged(self.lastEventSize)
 
     def resizeEvent(self, event: QResizeEvent) -> None:
-        pass
+        if self.dynamicBytesPerLine:
+            pxFixGaps = 0
+            if self.addressArea:
+                pxFixGaps = self.addressWidth * self.pxCharWidth + self.pxGapAdr
+            pxFixGaps += self.pxGapAdrHex
+            if self.asciiArea:
+                pxFixGaps += self.pxGapHexAscii
+            # +1 because the last hex value do not have space. so it is effective one char more
+            charWidth = (self.viewport().width() - pxFixGaps) // self.pxCharWidth + 1
+            # 2 hex alfa-digits 1 space 1 ascii per byte = 4; if ascii is disabled then 3
+            # to prevent devision by zero use the min value 1
+            self.setBytesPerLine(max(charWidth // (4 if self.asciiArea else 3), 1))
+        self.adjust()
 
     def focusNextPrevChild(self, nextChild: bool) -> bool:
         pass
