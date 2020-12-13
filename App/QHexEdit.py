@@ -193,7 +193,6 @@ class QHexEdit(QAbstractScrollArea):
                 painter.drawLine(linePos - pxOfsx, event.rect().top(), linePos - pxOfsx, self.height())
             painter.setPen(self.viewport().palette().color(QPalette.WindowText))
             if self.addressArea:
-                address = str()
                 pxPosY = self.pxCharHeight
                 for row in range(self.dataShown.size() // self.bytesPerLine):
                     address = str(self.addressDigit)
