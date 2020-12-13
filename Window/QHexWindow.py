@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QMainWindow, QMenu, QToolBar, QAction, QLabel, QMessageBox, QFileDialog
-from PyQt5.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent, QIcon
+from PyQt5.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent, QIcon, QKeySequence
 from PyQt5.QtCore import QFile, QSize, QFileInfo, QSettings
 from Dialog.OptionsDialog import OptionsDialog
 from App.QHexEdit import QHexEdit
@@ -112,6 +112,8 @@ class QHexWindow(QMainWindow):
     # noinspection PyUnresolvedReferences
     def createActions(self):
         self.openAction = QAction(QIcon('Icons/MenuOpen.svg'), '&Open', self)
+        self.openAction.setStatusTip('Open a existing file')
+        self.openAction.setShortcut(QKeySequence.Open)
         self.openAction.triggered.connect(self.open)
 
         self.saveAction = QAction(QIcon('Icons/MenuSaveAll'), '&Save', self)
