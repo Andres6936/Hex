@@ -252,6 +252,17 @@ class QHexEdit(QAbstractScrollArea):
                         if self.markedShown.at(posBa - self.bPosFirst):
                             c = self.brushHighlighted.color()
                             painter.setPen(self.penHighlighted)
+                    r = QRect()
+                    if colIdx == 0:
+                        r.setRect(pxPosX, pxPosY - self.pxCharHeight + self.pxSelectionSub, 2 * self.pxCharWidth,
+                                  self.pxCharHeight)
+                    else:
+                        r.setRect(pxPosX - self.pxCharWidth, pxPosY - self.pxCharHeight + self.pxSelectionSub,
+                                  3 * self.pxCharWidth, self.pxCharHeight)
+                    painter.fillRect(r, c)
+                    hex = self.hexDataShow.mid((bPosLine + colIdx) * 2, 2)
+                    painter.drawText(pxPosX, pxPosY, hex.toUpper() if self.hexCaps else hex)
+                    pxPosX += 3 * self.pxCharWidth
                     colIdx += 1
 
         # _cursorPosition counts in 2, _bPosFirst counts in 1
