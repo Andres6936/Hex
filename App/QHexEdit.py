@@ -321,10 +321,10 @@ class QHexEdit(QAbstractScrollArea):
         pass
 
     def getSelectionBegin(self) -> int:
-        pass
+        return self.bSelectionBegin
 
     def getSelectionEnd(self) -> int:
-        pass
+        return self.bSelectionEnd
 
     def adjust(self) -> None:
         if self.addressArea:

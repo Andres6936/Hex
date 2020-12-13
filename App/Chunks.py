@@ -88,11 +88,11 @@ class Chunks(QObject):
                     byteCount = chunk.absPos - position
                 maxSize -= byteCount
                 self.device.seek(position + delta)
-                readBuffer: QByteArray = self.device.read(byteCount)
+                readBuffer = self.device.read(byteCount)
                 buffer += readBuffer
                 if highlighted:
                     highlighted += QByteArray(readBuffer.size(), NORMAL)
-                position += readBuffer.size()
+                position += len(readBuffer)
         self.device.close()
         return buffer
 
