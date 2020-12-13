@@ -133,7 +133,7 @@ class QHexEdit(QAbstractScrollArea):
         return status
 
     def dataAt(self, position: int, count: int) -> QByteArray:
-        pass
+        return self.chunks.data(position, count)
 
     def write(self, device: QIODevice, position: int, count: int) -> bool:
         pass

@@ -94,6 +94,7 @@ class Chunks(QObject):
                     highlighted += QByteArray(readBuffer.size(), NORMAL)
                 position += readBuffer.size()
         self.device.close()
+        return buffer
 
     def write(self, device: QIODevice, position: int = 0, count: int = -1) -> bool:
         if count == -1:
