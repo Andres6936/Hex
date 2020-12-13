@@ -240,7 +240,7 @@ class QHexEdit(QAbstractScrollArea):
         # emit event, if size has changed
         if self.lastEventSize != self.chunks.size:
             self.lastEventSize = self.chunks.size
-            self.currentSizeChanged(self.lastEventSize)
+            # self.currentSizeChanged(self.lastEventSize)
 
     def resizeEvent(self, event: QResizeEvent) -> None:
         if self.dynamicBytesPerLine:
