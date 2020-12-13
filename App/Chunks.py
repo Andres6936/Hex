@@ -3,7 +3,8 @@ import sys
 from PyQt5.QtCore import QByteArray, QObject, QIODevice, QBuffer
 
 NORMAL = 1
-CHUNK_SIZE = 100
+CHUNK_SIZE = 0x1000
+BUFFER_SIZE = 0x10000
 
 
 class Chunk:
@@ -95,7 +96,15 @@ class Chunks(QObject):
         self.device.close()
 
     def write(self, device: QIODevice, position: int = 0, count: int = -1) -> bool:
-        pass
+        if count == -1:
+            count = self.size
+        status = device.open(QIODevice.WriteOnly)
+        if status:
+            for idx in range(position, count, BUFFER_SIZE):
+                array = self.data(idx, BUFFER_SIZE)
+                device.write(array)
+            device.close()
+        return status
 
     def setDataChanged(self, position: int, dataChanged: bool) -> None:
         pass
