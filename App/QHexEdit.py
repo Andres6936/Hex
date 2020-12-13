@@ -265,6 +265,8 @@ class QHexEdit(QAbstractScrollArea):
                                      bytes(hex.toUpper()).decode() if self.hexCaps else bytes(hex).decode())
                     pxPosX += 3 * self.pxCharWidth
                     colIdx += 1
+            painter.setBackgroundMode(Qt.TransparentMode)
+            painter.setPen(self.viewport().palette().color(QPalette.WindowText))
 
         # _cursorPosition counts in 2, _bPosFirst counts in 1
         hexPositionInShowData = self.cursorPosition - 2 * self.bPosFirst
