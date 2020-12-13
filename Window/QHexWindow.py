@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QMenu, QToolBar, QAction, QLabel, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QMenu, QToolBar, QAction, QLabel, QMessageBox, QFileDialog
 from PyQt5.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent, QIcon
 from PyQt5.QtCore import QFile, QSize, QFileInfo, QSettings
 from Dialog.OptionsDialog import OptionsDialog
@@ -56,7 +56,11 @@ class QHexWindow(QMainWindow):
         pass
 
     def open(self):
-        pass
+        options = QFileDialog().Options()
+        options |= QFileDialog.DontUseNativeDialog
+        filename, _ = QFileDialog.getOpenFileName(self, "Select File", options=options)
+        if filename:
+            self.loadFile(filename)
 
     def optionsAccepted(self):
         pass
@@ -105,8 +109,11 @@ class QHexWindow(QMainWindow):
         self.createToolBars()
         self.readSettings()
 
+    # noinspection PyUnresolvedReferences
     def createActions(self):
         self.openAction = QAction(QIcon('Icons/MenuOpen.svg'), '&Open', self)
+        self.openAction.triggered.connect(self.open)
+
         self.saveAction = QAction(QIcon('Icons/MenuSaveAll'), '&Save', self)
         self.saveAsAction = QAction('Save &As...', self)
         self.saveReadable = QAction('Save &Readable', self)
