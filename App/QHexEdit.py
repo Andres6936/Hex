@@ -360,7 +360,9 @@ class QHexEdit(QAbstractScrollArea):
         pass
 
     def readBuffers(self) -> None:
-        pass
+        self.dataShown = self.chunks.data(self.bPosFirst, self.bPosLast - self.bPosFirst + self.bytesPerLine + 1,
+                                          self.markedShown)
+        self.hexDataShow = QByteArray(self.dataShown.toHex())
 
     def toReadable(self, array: QByteArray) -> str:
         result = str()
