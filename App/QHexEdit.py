@@ -28,6 +28,7 @@ class QHexEdit(QAbstractScrollArea):
         self.dynamicBytesPerLine = False
         self.blink = True
         self.modified = True
+        self.addressDigit = 0
 
         # Name Convention: pixel position start with px
         self.pxCharWidth = 0
@@ -190,6 +191,14 @@ class QHexEdit(QAbstractScrollArea):
                 linePos = self.pxPosAsciiX - (self.pxGapHexAscii // 2)
                 painter.setPen(Qt.gray)
                 painter.drawLine(linePos - pxOfsx, event.rect().top(), linePos - pxOfsx, self.height())
+            painter.setPen(self.viewport().palette().color(QPalette.WindowText))
+            if self.addressArea:
+                address = str()
+                pxPosY = self.pxCharHeight
+                for row in range(self.dataShown.size() // self.bytesPerLine):
+                    address = str(self.addressDigit)
+                    painter.drawText(self.pxPosAdrX - pxOfsx, pxPosY, address.upper() if self.hexCaps else address)
+                    pxPosY += self.pxCharHeight
 
         # _cursorPosition counts in 2, _bPosFirst counts in 1
         hexPositionInShowData = self.cursorPosition - 2 * self.bPosFirst
