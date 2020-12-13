@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QAbstractScrollArea
-from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent, QPainter, QPalette, QPen
+from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent, QPainter, QPalette, QPen, \
+    QBrush
 from PyQt5.QtCore import QByteArray, QIODevice, QPoint, QRect, pyqtSignal, Qt, QTimer
 from App.Chunks import Chunks
 from App.UndoStack import UndoStack
@@ -59,11 +60,16 @@ class QHexEdit(QAbstractScrollArea):
         self.__font = QFont()
         self.data = QByteArray()
         self.cursorRect = QRect()
+        self.penSelection = QPen()
         self.cursorTimer = QTimer()
+        self.penHighlighted = QPen()
         self.undoStack = UndoStack()
         self.dataShown = QByteArray()
+        self.brushSelection = QBrush()
         self.selectionColor = QColor()
         self.hexDataShow = QByteArray()
+        self.markedShown = QByteArray()
+        self.brushHighlighted = QBrush()
         self.addressAreaColor = QColor()
         self.highlightingColor = QColor()
 
@@ -236,6 +242,16 @@ class QHexEdit(QAbstractScrollArea):
                 pxPosY += self.pxCharHeight
                 colIdx = 0
                 while (bPosLine + colIdx) < self.dataShown.size() and colIdx < self.bytesPerLine:
+                    c = self.viewport().palette().color(QPalette.Base)
+                    painter.setPen(colStandard)
+                    posBa = self.bPosFirst + bPosLine + colIdx
+                    if self.getSelectionBegin() <= posBa < self.getSelectionEnd():
+                        c = self.brushSelection.color()
+                        painter.setPen(self.penSelection)
+                    elif self.highlighting:
+                        if self.markedShown.at(posBa - self.bPosFirst):
+                            c = self.brushHighlighted.color()
+                            painter.setPen(self.penHighlighted)
                     colIdx += 1
 
         # _cursorPosition counts in 2, _bPosFirst counts in 1
