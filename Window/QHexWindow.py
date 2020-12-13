@@ -53,7 +53,7 @@ class QHexWindow(QMainWindow):
         pass
 
     def dataChanged(self):
-        pass
+        self.setWindowModified(self.hexEdit.isModified())
 
     def open(self):
         options = QFileDialog().Options()
