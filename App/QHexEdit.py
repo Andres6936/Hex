@@ -69,7 +69,8 @@ class QHexEdit(QAbstractScrollArea):
         self.viewport().update()
 
     def setAddressAreaColor(self, color: QColor) -> None:
-        pass
+        self.addressAreaColor = color
+        self.viewport().update()
 
     def setAddressOffset(self, addressOffset: int) -> None:
         pass
