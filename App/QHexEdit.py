@@ -96,7 +96,11 @@ class QHexEdit(QAbstractScrollArea):
         pass
 
     def setBytesPerLine(self, count: int) -> None:
-        pass
+        self.bytesPerLine = count
+        self.hexCharInLine = count * 3 - 1
+        self.adjust()
+        self.setCursorPosition(self.cursorPosition)
+        self.viewport().update()
 
     def setCursorPosition(self, position: int) -> None:
         pass
