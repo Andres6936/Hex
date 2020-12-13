@@ -41,13 +41,18 @@ class QHexWindow(QMainWindow):
         self.show()
 
     def closeEvent(self, event: QCloseEvent) -> None:
-        pass
+        self.writeSettings()
 
     def dragEnterEvent(self, event: QDragEnterEvent) -> None:
-        pass
+        if event.mimeData().hasUrls():
+            event.accept()
 
     def dropEvent(self, event: QDropEvent) -> None:
-        pass
+        if event.mimeData().hasUrls():
+            urls = event.mimeData().urls()
+            filepath = urls[0].toLocalFile()
+            self.loadFile(filepath)
+            event.accept()
 
     def about(self):
         pass
