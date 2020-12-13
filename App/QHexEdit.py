@@ -260,7 +260,7 @@ class QHexEdit(QAbstractScrollArea):
                     else:
                         r.setRect(pxPosX - self.pxCharWidth, pxPosY - self.pxCharHeight + self.pxSelectionSub,
                                   3 * self.pxCharWidth, self.pxCharHeight)
-                    painter.fillRect(r, c)
+                    # painter.fillRect(r, c)
                     hex = self.hexDataShow.mid((bPosLine + colIdx) * 2, 2)
                     painter.drawText(pxPosX, pxPosY,
                                      bytes(hex.toUpper()).decode() if self.hexCaps else bytes(hex).decode())
