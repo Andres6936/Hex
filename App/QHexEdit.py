@@ -9,6 +9,7 @@ class QHexEdit(QAbstractScrollArea):
     dataChanged = pyqtSignal()
     overwriteModeChanged = pyqtSignal(bool)
 
+    # noinspection PyUnresolvedReferences
     def __init__(self):
         super().__init__()
 
@@ -66,6 +67,7 @@ class QHexEdit(QAbstractScrollArea):
         self.addressAreaColor = QColor()
         self.highlightingColor = QColor()
 
+        self.cursorTimer.timeout.connect(self.updateCursor)
         self.cursorTimer.setInterval(500)
         self.cursorTimer.start()
 
@@ -330,3 +332,10 @@ class QHexEdit(QAbstractScrollArea):
                     ascString += str(character)
             result += addString + ' ' + hexString + ' ' + ascString + '\n'
         return result
+
+    def updateCursor(self):
+        if self.blink:
+            self.blink = False
+        else:
+            self.blink = True
+        self.viewport().update(self.cursorRect)
