@@ -261,7 +261,8 @@ class QHexEdit(QAbstractScrollArea):
                                   3 * self.pxCharWidth, self.pxCharHeight)
                     painter.fillRect(r, c)
                     hex = self.hexDataShow.mid((bPosLine + colIdx) * 2, 2)
-                    painter.drawText(pxPosX, pxPosY, hex.toUpper() if self.hexCaps else hex)
+                    painter.drawText(pxPosX, pxPosY,
+                                     bytes(hex.toUpper()).decode() if self.hexCaps else bytes(hex).decode())
                     pxPosX += 3 * self.pxCharWidth
                     colIdx += 1
 
@@ -284,10 +285,10 @@ class QHexEdit(QAbstractScrollArea):
                     ch = '.'
                 painter.drawText(self.pxCursorX - pxOffsetX, self.pxCursorY, ch)
             else:
-                painter.drawText(self.pxCursorX - pxOffsetX, self.pxCursorY,
-                                 self.hexDataShow.mid(hexPositionInShowData,
-                                                      1).toUpper() if self.hexCaps else self.hexDataShow.mid(
-                                     hexPositionInShowData, 1))
+                string = self.hexDataShow.mid(hexPositionInShowData,
+                                              1).toUpper() if self.hexCaps else self.hexDataShow.mid(
+                    hexPositionInShowData, 1)
+                painter.drawText(self.pxCursorX - pxOffsetX, self.pxCursorY, bytes(string).decode())
         # emit event, if size has changed
         if self.lastEventSize != self.chunks.size:
             self.lastEventSize = self.chunks.size
