@@ -71,6 +71,9 @@ class QHexEdit(QAbstractScrollArea):
         self.cursorTimer.setInterval(500)
         self.cursorTimer.start()
 
+        self.verticalScrollBar().valueChanged.connect(self.adjust())
+        self.horizontalScrollBar().valueChanged.connect(self.adjust())
+
         self.setFont(QFont("Monospace", 12))
 
     def setAddressArea(self, addressArea: bool) -> None:
