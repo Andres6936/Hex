@@ -2,6 +2,7 @@ import sys
 
 from PyQt5.QtCore import QByteArray, QObject, QIODevice, QBuffer
 
+NORMAL = 1
 CHUNK_SIZE = 100
 
 
@@ -79,7 +80,19 @@ class Chunks(QObject):
                         if highlighted:
                             highlighted += chunk.dataChanged.mid(chunkOfs, count)
             if maxSize > 0 and position < chunk.absPos:
-                pass
+                byteCount = 0
+                if (chunk.absPos - position) > maxSize:
+                    byteCount = maxSize
+                else:
+                    byteCount = chunk.absPos - position
+                maxSize -= byteCount
+                self.device.seek(position + delta)
+                readBuffer: QByteArray = self.device.read(byteCount)
+                buffer += readBuffer
+                if highlighted:
+                    highlighted += QByteArray(readBuffer.size(), NORMAL)
+                position += readBuffer.size()
+        self.device.close()
 
     def write(self, device: QIODevice, position: int = 0, count: int = -1) -> bool:
         pass
