@@ -29,6 +29,7 @@ class QHexEdit(QAbstractScrollArea):
         self.blink = True
         self.modified = True
         self.addressDigit = 0
+        self.rowsShown = 0
 
         # Name Convention: pixel position start with px
         self.pxCharWidth = 0
@@ -261,7 +262,28 @@ class QHexEdit(QAbstractScrollArea):
         pass
 
     def adjust(self) -> None:
-        pass
+        if self.addressArea:
+            self.addressDigit = self.addressWidth
+            self.pxPosHexX = self.pxGapAdr + self.addressDigit * self.pxCharWidth * self.pxGapAdrHex
+        else:
+            self.pxPosHexX = self.pxGapAdrHex
+        self.pxPosAdrX = self.pxGapAdr
+        self.pxPosAsciiX = self.pxPosHexX + self.hexCharInLine * self.pxCharWidth + self.pxGapHexAscii
+
+        # Set horizontalScrollBar()
+        pxWidth = self.pxPosAsciiX
+        if self.asciiArea:
+            pxWidth += self.bytesPerLine * self.pxCharWidth
+        self.horizontalScrollBar().setRange(0, pxWidth - self.viewport().width())
+        self.horizontalScrollBar().setPageStep(self.viewport().width())
+
+        # Set verticalScrollbar()
+        self.rowsShown = (self.viewport().height() - 4) // self.pxCharHeight
+        lineCount = (self.chunks.size // self.bytesPerLine) + 1
+        self.verticalScrollBar().setRange(0, lineCount - self.rowsShown)
+        self.verticalScrollBar().setPageStep(self.rowsShown)
+
+        value = self.verticalScrollBar().value()
 
     # noinspection PyUnresolvedReferences
     def dataChangedPrivate(self) -> None:
