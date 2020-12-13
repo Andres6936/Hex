@@ -136,7 +136,7 @@ class QHexEdit(QAbstractScrollArea):
         return self.chunks.data(position, count)
 
     def write(self, device: QIODevice, position: int, count: int) -> bool:
-        pass
+        return self.chunks.write(device, position, count)
 
     def insertChar(self, index: int, character: str) -> None:
         pass
