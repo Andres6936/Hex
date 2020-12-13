@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QAbstractScrollArea
 from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent, QPainter, QPalette
-from PyQt5.QtCore import QByteArray, QIODevice, QPoint, QRect, pyqtSignal
+from PyQt5.QtCore import QByteArray, QIODevice, QPoint, QRect, pyqtSignal, Qt
 from App.Chunks import Chunks
 from App.UndoStack import UndoStack
 
@@ -185,6 +185,11 @@ class QHexEdit(QAbstractScrollArea):
                 painter.fillRect(
                     QRect(-pxOfsx, event.rect().top(), self.pxPosHexX - self.pxGapAdrHex // 2, self.height()),
                     self.addressAreaColor)
+
+            if self.asciiArea:
+                linePos = self.pxPosAsciiX - (self.pxGapHexAscii // 2)
+                painter.setPen(Qt.gray)
+                painter.drawLine(linePos - pxOfsx, event.rect().top(), linePos - pxOfsx, self.height())
 
         # _cursorPosition counts in 2, _bPosFirst counts in 1
         hexPositionInShowData = self.cursorPosition - 2 * self.bPosFirst
