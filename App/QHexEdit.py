@@ -349,6 +349,12 @@ class QHexEdit(QAbstractScrollArea):
         self.verticalScrollBar().setPageStep(self.rowsShown)
 
         value = self.verticalScrollBar().value()
+        self.bPosFirst = value * self.bytesPerLine
+        self.bPosLast = self.bPosFirst + (self.rowsShown * self.bytesPerLine) - 1
+        if self.bPosLast >= self.chunks.size:
+            self.bPosLast = self.chunks.size - 1
+        self.readBuffers()
+        self.setCursorPosition(self.cursorPosition)
 
     # noinspection PyUnresolvedReferences
     def dataChangedPrivate(self) -> None:
