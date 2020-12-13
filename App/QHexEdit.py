@@ -27,6 +27,7 @@ class QHexEdit(QAbstractScrollArea):
         self.hexCaps = False
         self.dynamicBytesPerLine = False
         self.blink = True
+        self.modified = True
 
         # Name Convention: pixel position start with px
         self.pxCharWidth = 0
@@ -105,7 +106,9 @@ class QHexEdit(QAbstractScrollArea):
         pass
 
     def setDataDevice(self, device: QIODevice) -> bool:
-        pass
+        status = self.chunks.setIODevice(device)
+        self.dataChangedPrivate()
+        return status
 
     def dataAt(self, position: int, count: int) -> QByteArray:
         pass
@@ -225,8 +228,11 @@ class QHexEdit(QAbstractScrollArea):
     def adjust(self) -> None:
         pass
 
+    # noinspection PyUnresolvedReferences
     def dataChangedPrivate(self) -> None:
-        pass
+        self.modified = self.undoStack.index() != 0
+        self.adjust()
+        self.dataChanged.emit()
 
     def refresh(self) -> None:
         pass
