@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QAbstractScrollArea
-from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent, QPainter, QPalette
+from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent, QPainter, QPalette, \
+    QFontMetrics
 from PyQt5.QtCore import QByteArray, QIODevice, QPoint, QRect, pyqtSignal, Qt
 from App.Chunks import Chunks
 from App.UndoStack import UndoStack
@@ -63,6 +64,8 @@ class QHexEdit(QAbstractScrollArea):
         self.hexDataShow = QByteArray()
         self.addressAreaColor = QColor()
         self.highlightingColor = QColor()
+
+        self.setFont(QFont("Monospace", 12))
 
     def setAddressArea(self, addressArea: bool) -> None:
         self.addressArea = addressArea
@@ -159,7 +162,18 @@ class QHexEdit(QAbstractScrollArea):
         pass
 
     def setFont(self, font: QFont) -> None:
-        pass
+        newFont = QFont(font)
+        newFont.setStyleHint(QFont.Monospace)
+        super(QHexEdit, self).setFont(newFont)
+        metrics = self.fontMetrics()
+        self.pxCharWidth = metrics.horizontalAdvance('2')
+        self.pxCharHeight = metrics.height()
+        self.pxGapAdr = self.pxCharWidth // 2
+        self.pxGapAdrHex = self.pxCharWidth
+        self.pxGapHexAscii = 2 * self.pxCharWidth
+        self.pxCursorWidth = self.pxCharHeight // 7
+        self.pxSelectionSub = self.pxCharHeight // 5
+        self.viewport().update()
 
     def toReadableString(self) -> str:
         pass
