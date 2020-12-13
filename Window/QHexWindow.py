@@ -55,7 +55,7 @@ class QHexWindow(QMainWindow):
             event.accept()
 
     def about(self):
-        pass
+        QMessageBox.about(self, 'Hex', 'Hexadecimal View')
 
     def dataChanged(self):
         self.setWindowModified(self.hexEdit.isModified())
@@ -68,16 +68,24 @@ class QHexWindow(QMainWindow):
             self.loadFile(filename)
 
     def optionsAccepted(self):
-        pass
+        self.writeSettings()
+        self.readSettings()
 
     def findNext(self):
         pass
 
     def save(self):
-        pass
+        if self.isUntitled:
+            self.saveAs()
+        else:
+            self.saveFile(self.currentFile)
 
     def saveAs(self):
-        pass
+        filename = QFileDialog.getSaveFileName(self, 'Save As...', self.currentFile)
+        if len(filename) == 0:
+            return False
+
+        return self.saveFile(filename)
 
     def saveSelectionToReadableFile(self):
         pass
@@ -196,7 +204,7 @@ class QHexWindow(QMainWindow):
     def readSettings(self):
         pass
 
-    def saveFile(self):
+    def saveFile(self, filename: str):
         pass
 
     def setCurrentFile(self, filename: str):
