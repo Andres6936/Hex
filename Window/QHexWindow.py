@@ -182,6 +182,8 @@ class QHexWindow(QMainWindow):
         labelOverwriteMode.setMinimumWidth(70)
         self.statusBar().addPermanentWidget(labelOverwriteMode)
 
+        self.statusBar().showMessage('Ready', 2000)
+
     def createToolBars(self):
         self.fileToolBar = self.addToolBar('File')
         self.fileToolBar.setIconSize(QSize(16, 16))
