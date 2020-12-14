@@ -12,7 +12,7 @@ class QHexWindow(QMainWindow):
         self.currentFile = str()
         self.isUntitled = False
 
-        self.hexEdit = QHexEdit()
+        self.hexEdit = QHexEdit(self)
 
         self.file = QFile()
         self.fileMenu = QMenu()

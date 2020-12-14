@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QAbstractScrollArea
+from PyQt5.QtWidgets import QWidget, QAbstractScrollArea
 from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent, QPainter, QPalette, QPen, \
     QBrush
 from PyQt5.QtCore import QByteArray, QIODevice, QPoint, QRect, Qt, QTimer
@@ -47,8 +47,12 @@ class QHexEdit(QAbstractScrollArea):
     overwriteModeChanged = QSignal(bool)
 
     # noinspection PyUnresolvedReferences
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent: QWidget = None):
+        """
+        Creates an instance of QHexEdit.
+        :param parent: Parent widget of QHexEdit.
+        """
+        super().__init__(parent)
 
         self.addressArea = True
         """
