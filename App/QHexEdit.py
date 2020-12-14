@@ -1,14 +1,15 @@
 from PyQt5.QtWidgets import QAbstractScrollArea
 from PyQt5.QtGui import QColor, QFont, QResizeEvent, QPaintEvent, QMouseEvent, QKeyEvent, QPainter, QPalette, QPen, \
     QBrush
-from PyQt5.QtCore import QByteArray, QIODevice, QPoint, QRect, pyqtSignal, Qt, QTimer
+from PyQt5.QtCore import QByteArray, QIODevice, QPoint, QRect, Qt, QTimer
+from PyQt5.QtCore import pyqtSignal as QSignal
 from App.Chunks import Chunks
 from App.UndoStack import UndoStack
 
 
 class QHexEdit(QAbstractScrollArea):
-    dataChanged = pyqtSignal()
-    overwriteModeChanged = pyqtSignal(bool)
+    dataChanged = QSignal()
+    overwriteModeChanged = QSignal(bool)
 
     # noinspection PyUnresolvedReferences
     def __init__(self):
