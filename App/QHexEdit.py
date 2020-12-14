@@ -336,7 +336,7 @@ class QHexEdit(QAbstractScrollArea):
         newFont.setStyleHint(QFont.Monospace)
         super(QHexEdit, self).setFont(newFont)
         metrics = self.fontMetrics()
-        self.pxCharWidth = metrics.horizontalAdvance('2')
+        self.pxCharWidth = metrics.width('2')
         self.pxCharHeight = metrics.height()
         self.pxGapAdr = self.pxCharWidth // 2
         self.pxGapAdrHex = self.pxCharWidth
