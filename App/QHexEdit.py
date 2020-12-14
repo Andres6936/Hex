@@ -230,7 +230,7 @@ class QHexEdit(QAbstractScrollArea):
             if self.addressArea:
                 pxPosY = self.pxCharHeight
                 for row in range((self.dataShown.size() // self.bytesPerLine) + 1):
-                    address = "{0:0>16}".format(self.bPosFirst + row * self.bytesPerLine + self.addressOffset)
+                    address = "{0:0>8}".format(self.bPosFirst + row * self.bytesPerLine + self.addressOffset)
                     painter.drawText(self.pxPosAdrX - pxOffsetX, pxPosY, address.upper() if self.hexCaps else address)
                     pxPosY += self.pxCharHeight
             colStandard = QPen(self.viewport().palette().color(QPalette.WindowText))
