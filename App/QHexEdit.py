@@ -325,7 +325,13 @@ class QHexEdit(QAbstractScrollArea):
         self.adjust()
 
     def focusNextPrevChild(self, nextChild: bool) -> bool:
-        pass
+        if self.addressArea:
+            if (nextChild and self.editAreaIsAscii) or (not nextChild and not self.editAreaIsAscii):
+                super(QHexEdit, self).focusNextPrevChild(nextChild)
+            else:
+                return False
+        else:
+            super(QHexEdit, self).focusNextPrevChild(nextChild)
 
     def resetSelection(self):
         pass
