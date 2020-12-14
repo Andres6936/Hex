@@ -265,6 +265,15 @@ class QHexEdit(QAbstractScrollArea):
                     painter.drawText(pxPosX, pxPosY,
                                      bytes(hex.toUpper()).decode() if self.hexCaps else bytes(hex).decode())
                     pxPosX += 3 * self.pxCharWidth
+                    if self.asciiArea:
+                        ch = str(self.dataShown.at(bPosLine + colIdx))
+                        if ch < ' ' or ch > '~':
+                            ch = '.'
+                        r.setRect(pxPosAsciiX, pxPosX - self.pxCharHeight + self.pxSelectionSub, self.pxCharWidth,
+                                  self.pxCharHeight)
+                        painter.fillRect(r, c)
+                        painter.drawText(pxPosAsciiX, pxPosY, ch)
+                        pxPosAsciiX += self.pxCharWidth
                     colIdx += 1
             painter.setBackgroundMode(Qt.TransparentMode)
             painter.setPen(self.viewport().palette().color(QPalette.WindowText))
