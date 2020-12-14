@@ -88,6 +88,13 @@ class QHexEdit(QAbstractScrollArea):
         """
 
         self.readOnly = False
+        """
+        Property readOnly sets (setReadOnly()) or gets (isReadOnly) the mode
+        in which the editor works. In readonly mode the the user can only navigate
+        through the data and select data; modifying is not possible. This
+        property's default is false.
+        """
+
         self.cursorPosition = 0
         """
         Property cursorPosition sets or gets the position of the editor cursor
@@ -146,6 +153,10 @@ class QHexEdit(QAbstractScrollArea):
         self.chunks = Chunks(self)
 
         self.__font = QFont()
+        """
+        Set the font of the widget. Please use fixed width fonts like Mono or Courier.
+        """
+
         self.data = QByteArray()
         """
         Property data holds the content of QHexEdit. Call setData() to set the
