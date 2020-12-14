@@ -51,19 +51,71 @@ class QHexEdit(QAbstractScrollArea):
         super().__init__()
 
         self.addressArea = True
+        """
+        Property address area switch the address area on or off. Set addressArea true
+        (show it), false (hide it).
+        """
+
         self.addressWidth = 4
+        """
+        Set and get the minimum width of the address area, width in characters.
+        """
+
         self.addressOffset = 0
+        """
+        Property addressOffset is added to the Numbers of the Address Area.
+        A offset in the address area (left side) is sometimes useful, whe you show
+        only a segment of a complete memory picture. With setAddressOffset() you set
+        this property - with addressOffset() you get the current value.
+        """
+
         self.asciiArea = True
+        """
+        Switch the ascii area on (true, show it) or off (false, hide it).
+        """
+
         self.overwriteMode = True
+        """
+        Property overwrite mode sets (setOverwriteMode()) or gets (overwriteMode()) the mode
+        in which the editor works. In overwrite mode the user will overwrite existing data. The
+        size of data will be constant. In insert mode the size will grow, when inserting
+        new data.
+        """
+
         self.highlighting = True
+        """
+        Switch the highlighting feature on or of: true (show it), false (hide it).
+        """
+
         self.readOnly = False
         self.cursorPosition = 0
+        """
+        Property cursorPosition sets or gets the position of the editor cursor
+        in QHexEdit. Every byte in data has two cursor positions: the lower and upper
+        Nibble. Maximum cursor position is factor two of data.size().
+        """
+
         self.lastEventSize = 0
         self.hexCharInLine = 47
         self.bytesPerLine = 16
+        """
+        Set and get bytes number per line.
+        """
+
         self.editAreaIsAscii = False
         self.hexCaps = False
+        """
+        That property defines if the hex values looks as a-f if the value is false(default)
+        or A-F if value is true.
+        """
+
         self.dynamicBytesPerLine = False
+        """
+        Property defines the dynamic calculation of bytesPerLine parameter 
+        depends of width of widget. set this property true to avoid horizontal
+        scrollbars and show the maximal possible data. defalut value is false.
+        """
+
         self.blink = True
         self.modified = True
         self.addressDigit = 0
@@ -95,6 +147,13 @@ class QHexEdit(QAbstractScrollArea):
 
         self.__font = QFont()
         self.data = QByteArray()
+        """
+        Property data holds the content of QHexEdit. Call setData() to set the
+        content of QHexEdit, data() returns the actual content. When calling setData()
+        with a QByteArray as argument, QHexEdit creates a internal copy of the data
+        If you want to edit big files please use setData(), based on QIODevice.
+        """
+
         self.cursorRect = QRect()
         self.penSelection = QPen()
         self.cursorTimer = QTimer()
@@ -107,8 +166,24 @@ class QHexEdit(QAbstractScrollArea):
         self.brushHighlighted = QBrush()
 
         self.highlightingColor = QColor(0xff, 0xff, 0x99, 0xff)
+        """
+        Property highlighting color sets (setHighlightingColor()) the background
+        color of highlighted text areas. You can also read the color
+        (highlightingColor()).
+        """
+
         self.selectionColor = self.palette().highlight().color()
+        """
+        Property selection color sets (setSelectionColor()) the background
+        color of selected text areas. You can also read the color
+        (selectionColor()).
+        """
+
         self.addressAreaColor = self.palette().alternateBase().color()
+        """
+        Property address area color sets (setAddressAreaColor()) the background
+        color of address areas. You can also read the color (addressAreaColor()).
+        """
 
         self.cursorTimer.timeout.connect(self.updateCursor)
         self.cursorTimer.setInterval(500)
