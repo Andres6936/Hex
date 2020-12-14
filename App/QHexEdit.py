@@ -271,7 +271,7 @@ class QHexEdit(QAbstractScrollArea):
                             ch = '.'
                         r.setRect(pxPosAsciiX, pxPosX - self.pxCharHeight + self.pxSelectionSub, self.pxCharWidth,
                                   self.pxCharHeight)
-                        painter.fillRect(r, c)
+                        # painter.fillRect(r, c)
                         painter.drawText(pxPosAsciiX, pxPosY, ch)
                         pxPosAsciiX += self.pxCharWidth
                     colIdx += 1
