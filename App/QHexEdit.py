@@ -266,7 +266,7 @@ class QHexEdit(QAbstractScrollArea):
                                      bytes(hex.toUpper()).decode() if self.hexCaps else bytes(hex).decode())
                     pxPosX += 3 * self.pxCharWidth
                     if self.asciiArea:
-                        ch = str(self.dataShown.at(bPosLine + colIdx))
+                        ch = bytes(self.dataShown.at(bPosLine + colIdx)).decode()
                         if ch < ' ' or ch > '~':
                             ch = '.'
                         r.setRect(pxPosAsciiX, pxPosX - self.pxCharHeight + self.pxSelectionSub, self.pxCharWidth,
