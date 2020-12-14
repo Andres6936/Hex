@@ -106,6 +106,11 @@ class QHexEdit(QAbstractScrollArea):
         Nibble. Maximum cursor position is factor two of data.size().
         """
 
+        self.absoluteCursorPosition = 0
+        """
+        Absolute position of cursor, 1 Byte == 2 tics.
+        """
+
         self.lastEventSize = 0
         self.hexCharInLine = 47
         self.bytesPerLine = 16
@@ -114,6 +119,10 @@ class QHexEdit(QAbstractScrollArea):
         """
 
         self.editAreaIsAscii = False
+        """
+        Flag about the ascii mode edited.
+        """
+
         self.hexCaps = False
         """
         That property defines if the hex values looks as a-f if the value is false(default)
@@ -128,8 +137,16 @@ class QHexEdit(QAbstractScrollArea):
         """
 
         self.blink = True
+        """
+        Help get cursor blinking.
+        """
+
         self.modified = True
         self.addressDigit = 0
+        """
+        Real no of addressdigits, may be > addressWidth.
+        """
+
         self.rowsShown = 0
 
         # Name Convention: pixel position start with px
@@ -155,6 +172,9 @@ class QHexEdit(QAbstractScrollArea):
         self.bPosCurrent = 0
 
         self.chunks = Chunks(self)
+        """
+        IODevice based access to data.
+        """
 
         self.__font = QFont()
         """
@@ -172,6 +192,10 @@ class QHexEdit(QAbstractScrollArea):
         self.cursorRect = QRect()
         self.penSelection = QPen()
         self.cursorTimer = QTimer()
+        """
+        For blinking cursor.
+        """
+
         self.penHighlighted = QPen()
         self.undoStack = UndoStack()
         self.dataShown = QByteArray()
