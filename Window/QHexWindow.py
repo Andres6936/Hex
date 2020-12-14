@@ -18,6 +18,7 @@ class QHexWindow(QMainWindow):
         self.fileMenu = QMenu()
         self.editMenu = QMenu()
         self.helpMenu = QMenu()
+        self.labelSize = QLabel()
         self.fileToolBar = QToolBar()
         self.editToolBar = QToolBar()
         self.undoAction = QAction()
@@ -100,8 +101,8 @@ class QHexWindow(QMainWindow):
     def setOverwriteMode(self):
         pass
 
-    def setSize(self):
-        pass
+    def setSize(self, size):
+        self.labelSize.setText(str(size))
 
     def showOptionsDialog(self):
         pass
@@ -173,9 +174,9 @@ class QHexWindow(QMainWindow):
         self.statusBar().addPermanentWidget(labelAddress)
 
         self.statusBar().addPermanentWidget(QLabel('Size:'))
-        labelSize = QLabel()
-        labelSize.setMinimumWidth(70)
-        self.statusBar().addPermanentWidget(labelSize)
+        self.labelSize.setMinimumWidth(70)
+        self.statusBar().addPermanentWidget(self.labelSize)
+        self.hexEdit.currentSizeChanged.connect(self.setSize)
 
         self.statusBar().addPermanentWidget(QLabel('Mode:'))
         labelOverwriteMode = QLabel()
