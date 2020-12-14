@@ -236,7 +236,7 @@ class QHexEdit(QAbstractScrollArea):
     def setAddressArea(self, addressArea: bool) -> None:
         self.addressArea = addressArea
         self.adjust()
-        self.setCursorPosition(self.cursorPosition)
+        self.setCursorPosition(self.absoluteCursorPosition)
         self.viewport().update()
 
     def setAddressAreaColor(self, color: QColor) -> None:
@@ -256,7 +256,7 @@ class QHexEdit(QAbstractScrollArea):
         self.bytesPerLine = count
         self.hexCharInLine = count * 3 - 1
         self.adjust()
-        self.setCursorPosition(self.cursorPosition)
+        self.setCursorPosition(self.absoluteCursorPosition)
         self.viewport().update()
 
     def setCursorPosition(self, position: int) -> None:
@@ -429,7 +429,7 @@ class QHexEdit(QAbstractScrollArea):
             painter.setPen(self.viewport().palette().color(QPalette.WindowText))
 
         # _cursorPosition counts in 2, _bPosFirst counts in 1
-        hexPositionInShowData = self.cursorPosition - 2 * self.bPosFirst
+        hexPositionInShowData = self.absoluteCursorPosition - 2 * self.bPosFirst
 
         if 0 <= hexPositionInShowData < self.hexDataShow.size():
             if self.readOnly:
@@ -526,7 +526,7 @@ class QHexEdit(QAbstractScrollArea):
         if self.bPosLast >= self.chunks.size:
             self.bPosLast = self.chunks.size - 1
         self.readBuffers()
-        self.setCursorPosition(self.cursorPosition)
+        self.setCursorPosition(self.absoluteCursorPosition)
 
     # noinspection PyUnresolvedReferences
     def dataChangedPrivate(self) -> None:
