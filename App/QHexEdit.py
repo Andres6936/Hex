@@ -41,6 +41,7 @@ class QHexEdit(QAbstractScrollArea):
     data. The size of edited data can be more then two gigabytes without any
     restrictions.
     """
+
     dataChanged = QSignal()
     currentSizeChanged = QSignal(int)
     overwriteModeChanged = QSignal(bool)
