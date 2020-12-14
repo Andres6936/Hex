@@ -350,8 +350,10 @@ class QHexEdit(QAbstractScrollArea):
 
     def adjust(self) -> None:
         if self.addressArea:
-            self.addressDigit = self.addressWidth
-            self.pxPosHexX = self.pxGapAdr + self.addressDigit * self.pxCharWidth * self.pxGapAdrHex
+            # The addressDigit is the total of digits that is used for represent the directions of memory
+            # Old called to method: getAddressDigit()
+            self.addressDigit = 8
+            self.pxPosHexX = self.pxGapAdr + self.addressDigit * self.pxCharWidth + self.pxGapAdrHex
         else:
             self.pxPosHexX = self.pxGapAdrHex
         self.pxPosAdrX = self.pxGapAdr
