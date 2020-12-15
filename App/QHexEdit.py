@@ -379,9 +379,9 @@ class QHexEdit(QAbstractScrollArea):
             painter.setPen(self.viewport().palette().color(QPalette.WindowText))
             if self.addressArea:
                 pxPosY = self.pxCharHeight
-                for row in range((self.dataShown.size() // self.bytesPerLine) + 1):
+                for row in range(self.dataShown.size() // self.bytesPerLine):
                     address = "{0:0>8}".format(self.bPosFirst + row * self.bytesPerLine + self.addressOffset)
-                    painter.drawText(self.pxPosAdrX - pxOffsetX, pxPosY, address.upper() if self.hexCaps else address)
+                    painter.drawText(self.pxPosAdrX - pxOffsetX, pxPosY, address)
                     pxPosY += self.pxCharHeight
             colStandard = QPen(self.viewport().palette().color(QPalette.WindowText))
             painter.setBackgroundMode(Qt.TransparentMode)
