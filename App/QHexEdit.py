@@ -378,7 +378,8 @@ class QHexEdit(QAbstractScrollArea):
                 painter.drawLine(linePos - pxOffsetX, event.rect().top(), linePos - pxOffsetX, self.height())
             painter.setPen(self.viewport().palette().color(QPalette.WindowText))
             if self.addressArea:
-                pxPosY = self.pxCharHeight
+                # x2 for align with hex and ascii panel
+                pxPosY = self.pxCharHeight * 2
                 for row in range(self.dataShown.size() // self.bytesPerLine):
                     address = "{0:0>8}".format(self.bPosFirst + row * self.bytesPerLine + self.addressOffset)
                     painter.drawText(self.pxPosAdrX - pxOffsetX, pxPosY, address)
