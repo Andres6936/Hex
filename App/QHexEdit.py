@@ -378,8 +378,7 @@ class QHexEdit(QAbstractScrollArea):
                 painter.drawLine(linePos - pxOffsetX, event.rect().top(), linePos - pxOffsetX, self.height())
             painter.setPen(self.viewport().palette().color(QPalette.WindowText))
             if self.addressArea:
-                # x2 for align with hex and ascii panel
-                pxPosY = self.pxCharHeight * 2
+                pxPosY = pxPosStartY
                 for row in range(self.dataShown.size() // self.bytesPerLine):
                     address = "{0:0>8}".format(self.bPosFirst + row * self.bytesPerLine + self.addressOffset)
                     painter.drawText(self.pxPosAdrX - pxOffsetX, pxPosY, address)
@@ -391,7 +390,6 @@ class QHexEdit(QAbstractScrollArea):
                 pxPosX = self.pxPosHexX - pxOffsetX
                 pxPosAsciiX = self.pxPosAsciiX - pxOffsetX
                 bPosLine = row * self.bytesPerLine
-                pxPosY += self.pxCharHeight
                 colIdx = 0
                 while (bPosLine + colIdx) < self.dataShown.size() and colIdx < self.bytesPerLine:
                     c = self.viewport().palette().color(QPalette.Base)
@@ -426,6 +424,7 @@ class QHexEdit(QAbstractScrollArea):
                         painter.drawText(pxPosAsciiX, pxPosY, ch)
                         pxPosAsciiX += self.pxCharWidth
                     colIdx += 1
+                pxPosY += self.pxCharHeight
             painter.setBackgroundMode(Qt.TransparentMode)
             painter.setPen(self.viewport().palette().color(QPalette.WindowText))
 
